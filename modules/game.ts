@@ -7,18 +7,14 @@ export class Game {
     this.app = new PIXI.Application({
       width: window.innerWidth,
       height: window.innerHeight,
+      resizeTo: window,
     });
 
     document.body.appendChild(this.app.view);
   }
 
   public start(): void {
-    window.addEventListener("resize", this.resize.bind(this));
     this.loadAssets();
-  }
-
-  private resize(): void {
-    this.app.renderer.resize(window.innerWidth, window.innerHeight);
   }
 
   private loadAssets(): void {

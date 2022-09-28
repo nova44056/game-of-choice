@@ -1,0 +1,2 @@
+Issue: Resizing
+https://www.html5gamedevs.com/topic/42553-resize-window/
