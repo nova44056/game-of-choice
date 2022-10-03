@@ -7,6 +7,13 @@ interface ICharacterMovementAnimation {
   right: PIXI.Texture[];
 }
 
+interface ICharacterAnimatedSprite {
+  down: PIXI.AnimatedSprite;
+  up: PIXI.AnimatedSprite;
+  left: PIXI.AnimatedSprite;
+  right: PIXI.AnimatedSprite;
+}
+
 interface Velocity {
   x: number;
   y: number;
@@ -17,4 +24,15 @@ interface Coordinate {
   y: number;
 }
 
-export { ICharacterMovementAnimation, Velocity, Coordinate };
+interface Grid {
+  row: number;
+  column: number;
+}
+
+export {
+  ICharacterMovementAnimation,
+  Velocity,
+  Coordinate,
+  Grid,
+  ICharacterAnimatedSprite,
+};

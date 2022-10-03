@@ -30,11 +30,14 @@ const getMapAssetPath = () => "assets/map.png";
  */
 const getCharacterMovementAnimation = (path: string) => {
   const CHARACTER_SPITESHEET_IMAGE_COLUMN = 4;
+  const CHARACTER_SPITESHEET_IMAGE_ROW = 4;
 
   const CHARACTER_HEIGHT =
-    PIXI.Loader.shared.resources[path].texture!.width / 4;
+    PIXI.Loader.shared.resources[path].texture!.height /
+    CHARACTER_SPITESHEET_IMAGE_ROW;
   const CHARACTER_WIDTH =
-    PIXI.Loader.shared.resources[path].texture!.height / 4;
+    PIXI.Loader.shared.resources[path].texture!.width /
+    CHARACTER_SPITESHEET_IMAGE_COLUMN;
 
   const characterMovementAnimation: ICharacterMovementAnimation = {
     down: Array.from({ length: CHARACTER_SPITESHEET_IMAGE_COLUMN }, (_, i) => {

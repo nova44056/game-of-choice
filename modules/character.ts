@@ -1,16 +1,13 @@
 import * as PIXI from "pixi.js";
 import { Coordinate, Velocity } from "../interface";
-import {
-  getCharacterMovementAnimation,
-  getPlayerAssetPath,
-  getZoomLevel,
-} from "../utils";
-import { CharacterController } from "./characterController";
+import { getCharacterMovementAnimation } from "../utils";
 
 //You can put export before the class template
 export class Character {
   private app: PIXI.Application;
   private sprite: PIXI.AnimatedSprite | undefined;
+
+  private ANIMATION_SPEED: number = 0.1;
 
   private velocity: Velocity = {
     x: 0,
@@ -31,11 +28,8 @@ export class Character {
     //creates a container for the character
     const characterContainer = new PIXI.Container();
 
-    //Sets the dimensions of the player scaled by the zoom level
-    character.width = character.width * getZoomLevel();
-    character.height = character.height * getZoomLevel();
-    //loops the animation I'm assuming?
     character.loop = true;
+    character.animationSpeed = this.ANIMATION_SPEED;
 
     //Ad the character to its conatiner
     characterContainer.addChild(character);
