@@ -11,7 +11,7 @@ export class CharacterController {
   private prevKeyPressed: string | null = null;
   private currentKeyPressed: string | null = null;
 
-  constructor(character: Character, velocity: number = 5) {
+  constructor(character: Character, velocity: number = 1) {
     this.character = character;
     this.velocity = velocity;
   }
@@ -29,6 +29,7 @@ export class CharacterController {
       }
 
       this.character.getSprite().play();
+
       switch (event.key) {
         case "ArrowUp":
         case "w":
@@ -50,11 +51,14 @@ export class CharacterController {
     });
 
     window.addEventListener("keyup", (event) => {
-      this.character.getSprite().gotoAndStop(0);
       this.character.setVelocity({
         x: 0,
         y: 0,
       });
+      // fix animation delay
+      setTimeout(() => {
+        this.character.getSprite().gotoAndStop(0);
+      }, 250);
     });
   }
 
@@ -73,35 +77,34 @@ export class CharacterController {
    * @See: ./utils/index.ts
    */
   public moveUp(): void {
+    this.updateSpriteMovementAnimation("up");
     this.character.setVelocity({
       x: 0,
-      y: this.character.getVelocity().y - this.velocity,
+      y: -this.velocity,
     });
-    this.updateSpriteMovementAnimation("up");
   }
 
   public moveDown(): void {
+    this.updateSpriteMovementAnimation("down");
     this.character.setVelocity({
       x: 0,
-      y: this.character.getVelocity().y + this.velocity,
+      y: this.velocity,
     });
-    this.updateSpriteMovementAnimation("down");
   }
 
   public moveLeft(): void {
+    this.updateSpriteMovementAnimation("left");
     this.character.setVelocity({
-      x: this.character.getVelocity().x - this.velocity,
+      x: -this.velocity,
       y: 0,
     });
-    this.updateSpriteMovementAnimation("left");
   }
 
   public moveRight(): void {
+    this.updateSpriteMovementAnimation("right");
     this.character.setVelocity({
-      x: this.character.getVelocity().x + this.velocity,
+      x: this.velocity,
       y: 0,
     });
-
-    this.updateSpriteMovementAnimation("right");
   }
 }
