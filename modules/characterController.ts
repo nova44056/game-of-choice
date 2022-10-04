@@ -58,7 +58,7 @@ export class CharacterController {
       // fix animation delay
       setTimeout(() => {
         this.character.getSprite().gotoAndStop(0);
-      }, 250);
+      }, 100);
     });
   }
 
