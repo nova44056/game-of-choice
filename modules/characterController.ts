@@ -56,8 +56,6 @@ export class CharacterController {
     window.addEventListener("keyup", (event) => {
       this.character.getSprite().animationSpeed = 0.5;
 
-      console.log(this.character.getSprite().animationSpeed);
-
       this.character.getSprite().gotoAndStop(0);
       this.character.setVelocity({
         x: 0,
