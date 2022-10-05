@@ -7,7 +7,7 @@ export class Character {
   private app: PIXI.Application;
   private sprite: PIXI.AnimatedSprite | undefined;
 
-  private ANIMATION_SPEED: number = 0.15;
+  private ANIMATION_SPEED: number = 0.5;
 
   private velocity: Velocity = {
     x: 0,

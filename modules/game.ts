@@ -14,7 +14,7 @@ export class Game {
   private player: Character | null = null;
   private map: Map | null = null;
 
-  private PLAYER_WALKING_SPEED: number = 2;
+  private PLAYER_WALKING_SPEED: number = 2.5;
 
   //The map doesn't size to the full width on edge, however the app itself does here?
   constructor() {
@@ -25,7 +25,7 @@ export class Game {
       resolution: window.devicePixelRatio || 1,
       autoDensity: true,
     });
-
+    PIXI.settings.GC_MAX_IDLE = 1;
     document.body.appendChild(this.app.view);
   }
 

@@ -19,6 +19,7 @@ export class CharacterController {
   /**
    * Event listener method for player movement keydown events
    */
+
   public addKeyboardListeners(): void {
     window.addEventListener("keydown", (event) => {
       if (this.prevKeyPressed === null && this.currentKeyPressed === null) {
@@ -28,35 +29,40 @@ export class CharacterController {
         this.currentKeyPressed = event.key;
       }
 
-      this.character.getSprite().play();
+      setTimeout(() => {
+        this.character.getSprite().animationSpeed = 0.15;
+      }, 50);
 
       switch (event.key) {
         case "ArrowUp":
-        case "w":
+          // case "w":
           this.moveUp();
           break;
         case "ArrowDown":
-        case "s":
+          // case "s":
           this.moveDown();
           break;
         case "ArrowLeft":
-        case "a":
+          // case "a":
           this.moveLeft();
           break;
         case "ArrowRight":
-        case "d":
+          // case "d":
           this.moveRight();
           break;
       }
     });
 
     window.addEventListener("keyup", (event) => {
+      this.character.getSprite().animationSpeed = 0.5;
+
+      console.log(this.character.getSprite().animationSpeed);
+
+      this.character.getSprite().gotoAndStop(0);
       this.character.setVelocity({
         x: 0,
         y: 0,
       });
-
-      this.character.getSprite().gotoAndStop(0);
     });
   }
 
@@ -65,8 +71,8 @@ export class CharacterController {
       this.character.setSpriteTextures(
         getCharacterMovementAnimation(getPlayerAssetPath())[direction]
       );
-      this.character.getSprite().play();
     }
+    this.character.getSprite().play();
   }
 
   /**
