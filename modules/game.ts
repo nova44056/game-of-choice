@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import { Map } from "./map";
 import { Character } from "./character";
-import { CharacterController } from "./characterController";
+import { PlayerController } from "./playerController";
 import { getPlayerAssetPath } from "../utils";
 
 /**
@@ -48,9 +48,36 @@ export class Game {
    */
   private start(delta: number): void {
     this.player?.setSpriteCoordinate({
-      x: this.player.getSprite().x + this.player.getVelocity().x,
-      y: this.player.getSprite().y + this.player.getVelocity().y,
+      x: this.player.getSprite()!.x + this.player.getVelocity().x,
+      y: this.player.getSprite()!.y + this.player.getVelocity().y,
     });
+
+    let screenCenter: PIXI.Point = new PIXI.Point(
+      this.app.screen.width * 0.5,
+      this.app.screen.height * 0.5
+    );
+
+    //the maps are anchored to the top left
+    //so minus playerCenter would put the playerCenter in the top left of screen + half the screen width / height to focues the playerCenter in the center of the screen
+    let newMapPos: PIXI.Point = new PIXI.Point(
+      -this.player!.getSprite()!.x + screenCenter.x,
+      -this.player!.getSprite()!.y + screenCenter.y
+    );
+
+    //this is a quick check to make sure the final map positions don't reveal the edge of the map
+    //it just checks the calculated map positions witht he screen boundary
+    if (newMapPos.x < -this.map!.getSprite().width + this.app.screen.width) {
+      newMapPos.x = -this.map!.getSprite().width + this.app.screen.width;
+    }
+    if (newMapPos.x > 0) {
+      newMapPos.x = 0;
+    }
+    if (newMapPos.y < -this.map!.getSprite().height + this.app.screen.height) {
+      newMapPos.y = -this.map!.getSprite().height + this.app.screen.height;
+    }
+    if (newMapPos.y > 0) {
+      newMapPos.y = 0;
+    }
   }
 
   /**
@@ -69,9 +96,10 @@ export class Game {
     this.player = player;
     this.map = map;
 
-    const playerController = new CharacterController(
+    const playerController = new PlayerController(
       this.player,
-      this.PLAYER_WALKING_SPEED
+      this.PLAYER_WALKING_SPEED,
+      this.map
     );
 
     playerController.addKeyboardListeners();

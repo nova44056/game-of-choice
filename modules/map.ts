@@ -1,10 +1,12 @@
 import * as PIXI from "pixi.js";
 import { getZoomLevel } from "../utils";
+import { Sprite } from "./sprite";
 
-export class Map {
+export class Map extends Sprite {
   private app: PIXI.Application;
 
   constructor(app: PIXI.Application) {
+    super();
     this.app = app;
   }
 
@@ -13,12 +15,10 @@ export class Map {
       PIXI.Loader.shared.resources["assets/map.png"].texture
     );
 
-    const gameMapContainer = new PIXI.Container();
-
     gameMap.width = gameMap.width * getZoomLevel();
     gameMap.height = gameMap.height * getZoomLevel();
 
-    gameMapContainer.addChild(gameMap);
-    this.app.stage.addChild(gameMapContainer);
+    this.setSprite(gameMap);
+    this.app.stage.addChild(gameMap);
   }
 }

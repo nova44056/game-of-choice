@@ -1,11 +1,11 @@
 import * as PIXI from "pixi.js";
 import { Coordinate, Velocity } from "../interface";
 import { getCharacterMovementAnimation } from "../utils";
+import { AnimatedSprite } from "./animatedSprite";
 
 //You can put export before the class template
-export class Character {
+export class Character extends AnimatedSprite {
   private app: PIXI.Application;
-  private sprite: PIXI.AnimatedSprite | undefined;
 
   private ANIMATION_SPEED: number = 0.5;
 
@@ -15,6 +15,7 @@ export class Character {
   };
 
   constructor(app: PIXI.Application) {
+    super();
     this.app = app;
   }
 
@@ -31,28 +32,20 @@ export class Character {
     character.loop = true;
     character.animationSpeed = this.ANIMATION_SPEED;
 
-    //Ad the character to its conatiner
-    characterContainer.addChild(character);
-
     //add the character container to the stage of the app.
-    this.app.stage.addChild(characterContainer);
+    this.app.stage.addChild(character);
 
     //sets the sprite to the player
-    this.sprite = character;
-  }
-
-  //returns the sprite
-  public getSprite(): PIXI.AnimatedSprite {
-    return this.sprite as PIXI.AnimatedSprite;
+    this.setSprite(character);
   }
 
   public setSpriteCoordinate(coordinate: Coordinate) {
-    this.sprite!.x = coordinate.x;
-    this.sprite!.y = coordinate.y;
+    this.getSprite().x = coordinate.x;
+    this.getSprite().y = coordinate.y;
   }
 
   public setSpriteTextures(textures: PIXI.Texture[]): void {
-    this.sprite!.textures = textures;
+    this.getSprite().textures = textures;
   }
 
   public getVelocity(): Velocity {

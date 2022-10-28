@@ -1,19 +1,23 @@
 import { getCharacterMovementAnimation, getPlayerAssetPath } from "../utils";
 import { Character } from "./character";
 import * as PIXI from "pixi.js";
+import { Map } from "./map";
 
 type Direction = "up" | "down" | "left" | "right";
 
-export class CharacterController {
-  private character: Character;
+export class PlayerController {
+  private player: Character;
   private velocity: number;
 
   private prevKeyPressed: string | null = null;
   private currentKeyPressed: string | null = null;
 
-  constructor(character: Character, velocity: number = 1) {
-    this.character = character;
+  private map: Map;
+
+  constructor(player: Character, velocity: number = 1, map: Map) {
+    this.player = player;
     this.velocity = velocity;
+    this.map = map;
   }
 
   /**
@@ -30,7 +34,7 @@ export class CharacterController {
       }
 
       setTimeout(() => {
-        this.character.getSprite().animationSpeed = 0.15;
+        this.player.getSprite().animationSpeed = 0.15;
       }, 50);
 
       switch (event.key) {
@@ -54,10 +58,10 @@ export class CharacterController {
     });
 
     window.addEventListener("keyup", (event) => {
-      this.character.getSprite().animationSpeed = 0.5;
+      this.player.getSprite().animationSpeed = 0.5;
 
-      this.character.getSprite().gotoAndStop(0);
-      this.character.setVelocity({
+      this.player.getSprite().gotoAndStop(0);
+      this.player.setVelocity({
         x: 0,
         y: 0,
       });
@@ -66,11 +70,11 @@ export class CharacterController {
 
   private updateSpriteMovementAnimation(direction: Direction): void {
     if (this.currentKeyPressed !== this.prevKeyPressed) {
-      this.character.setSpriteTextures(
+      this.player.setSpriteTextures(
         getCharacterMovementAnimation(getPlayerAssetPath())[direction]
       );
     }
-    this.character.getSprite().play();
+    this.player.getSprite().play();
   }
 
   /**
@@ -80,7 +84,7 @@ export class CharacterController {
    */
   public moveUp(): void {
     this.updateSpriteMovementAnimation("up");
-    this.character.setVelocity({
+    this.player.setVelocity({
       x: 0,
       y: -this.velocity,
     });
@@ -88,7 +92,7 @@ export class CharacterController {
 
   public moveDown(): void {
     this.updateSpriteMovementAnimation("down");
-    this.character.setVelocity({
+    this.player.setVelocity({
       x: 0,
       y: this.velocity,
     });
@@ -96,7 +100,7 @@ export class CharacterController {
 
   public moveLeft(): void {
     this.updateSpriteMovementAnimation("left");
-    this.character.setVelocity({
+    this.player.setVelocity({
       x: -this.velocity,
       y: 0,
     });
@@ -104,7 +108,7 @@ export class CharacterController {
 
   public moveRight(): void {
     this.updateSpriteMovementAnimation("right");
-    this.character.setVelocity({
+    this.player.setVelocity({
       x: this.velocity,
       y: 0,
     });
